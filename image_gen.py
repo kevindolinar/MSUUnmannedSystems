@@ -36,11 +36,12 @@ def replace_color(image_path, color):
 # Used to generate testing images
 def generate_image(requested_letter = None, requested_shape = None, requested_letter_color = None, requested_shape_color = None, requested_label = None, return_type = "target"):	
 	#----------------------------------------------------------------
-	# Set up our lists of different letters, shapes, and colors
+	# Set up our lists of different letters, shapes, colors, and orientations
 	letter_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 	shape_list = ['Circle', 'Semicircle', 'Quartercircle', 'Triangle', 'Square', 'Rectangle', 'Trapezoid', 'Pentagon', 'Hexagon',
 'Heptagon', 'Octagon', 'Star', 'Cross']
 	color_list = ['White', 'Black', 'Gray', 'Red', 'Blue', 'Green', 'Yellow', 'Purple', 'Brown', 'Orange']
+	orient_list = ['N', 'E', 'S', 'W']
 	#----------------------------------------------------------------
 
 
@@ -73,6 +74,7 @@ def generate_image(requested_letter = None, requested_shape = None, requested_le
 		shape_color = color_list[shape_color_temp]
 	else:
 		shape_color = requested_shape_color
+
 	#----------------------------------------------------------------
 	
 	# Loads up a random background from grass samples
@@ -122,7 +124,7 @@ def generate_image(requested_letter = None, requested_shape = None, requested_le
 	
 	#----------------------------------------------------------------
 	# Looks like the OS side of outputing
-	directory = 'composites/shapes/'+letter_list[shape_index].lower()
+	directory = 'composites/shapes/'+shape_list[shape_index].lower() # ** This line is making the folder config really confusing
 	if not os.path.exists(directory):
 		os.makedirs(directory)
 	composite.save(directory+'/'+composite_path)
