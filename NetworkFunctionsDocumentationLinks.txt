@@ -1,0 +1,22 @@
+US Stuff
+-----------------------
+input_data - 3 params
+http://tflearn.org/layers/core/
+
+conv_2d - 4 params
+http://tflearn.org/layers/conv/#convolution-2d
+
+max_pool_2d - 2 params
+http://tflearn.org/layers/conv/#max-pooling-2d
+
+fully_connected - 3 params
+http://tflearn.org/layers/core/
+
+dropout - 2 params
+http://tflearn.org/layers/core/#dropout
+
+regression - 4 params
+http://tflearn.org/layers/estimator/#regression
+
+tflearn.DNN - 3 params
+http://tflearn.org/models/dnn/
