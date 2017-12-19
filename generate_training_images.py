@@ -13,6 +13,6 @@ if sys.argv[1]:
 for i in range(0, num_testing_images):
 	tmp_img, tmp_label = image_gen.generate_image(return_type = "shape")
 	sys.stdout.write("Generating image %d/%d	 \r" % (i, num_testing_images) )
-	sys.stdout.flush()
+	sys.stdout.flush()	# Clears the output
 sys.stdout.write("Generating image %d/%d \n" % (i+1, num_testing_images) )
 sys.stdout.write("Finished generating images\n")

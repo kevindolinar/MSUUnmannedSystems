@@ -34,6 +34,8 @@ def replace_color(image_path, color):
 	return img
 
 # Used to generate testing images
+# Eventually going to have to be adjusted to hold the orientation parameter, but it's nested into a few other
+# files, so I'm holding off for now
 def generate_image(requested_letter = None, requested_shape = None, requested_letter_color = None, requested_shape_color = None, requested_label = None, return_type = "target"):	
 	#----------------------------------------------------------------
 	# Set up our lists of different letters, shapes, colors, and orientations
@@ -82,7 +84,6 @@ def generate_image(requested_letter = None, requested_shape = None, requested_le
 	
 	# Loading from random shape pngs
 	shape_path = 'shapes/' + shape + '_' + str(random.randint(1,2)) + '.png'
-	composite_path = letter_color + "_" + letter + "_" + shape_color + "_" + shape + ".png"
 
 	#----------------------------------------------------------------
 	# Not sure exactly what this block of code does
@@ -102,13 +103,41 @@ def generate_image(requested_letter = None, requested_shape = None, requested_le
 	shape_temp2.paste(replace_color(shape_path, shape_color), mask=shape_temp)
 	composite.paste(shape_temp2, (64,64), shape_temp)
 	temp = ImageDraw.Draw(composite)
-	font = ImageFont.truetype("arial.ttf", 62)
+
+
+	# Randomize font
+	rand_font = random.randrange(0, 3)
+	x = -1	# Just a bs spaceholder variable
+	# Currently only selects
+	if rand_font == 0 or rand_font == 1 or rand_font == 2:
+		x = 0
+	elif rand_font == 1:
+		x = 1
+	elif rand_font == 2:
+		x = 2
+
+	font = ImageFont.truetype("arial.ttf", 62)	# This line is going to get nested into the if/elif structure eventually
+
+
+
 	W, H = 256, 256
 	w, h = temp.textsize(letter)
 	temp.text((108, 99),letter,letter_color,font=font)
 	
-	# This is where rotation happens
-	composite = composite.rotate(random.randint(0,359))
+	# Pulling rotation into a variable
+	rand_rot = random.randint(0,359)
+
+	# Save the rotation to 'orientation'
+	if rand_rot <= 45 or rand_rot >= 315:
+		orientation = 'N'
+	elif rand_rot > 45 and rand_rot <= 135:
+		orientation = 'W'
+	elif rand_rot > 136 and rand_rot <= 225:
+		orientation = 'S'
+	elif rand_rot > 225 and rand_rot < 315:
+		orientation = 'E'
+
+	composite = composite.rotate(rand_rot) # **
 	scalex = random.randint(-5,5)
 	scaley = random.randint(-5,5) 
 	scale = random.randint(-27,27) 
@@ -127,6 +156,7 @@ def generate_image(requested_letter = None, requested_shape = None, requested_le
 	directory = 'composites/shapes/'+shape_list[shape_index].lower() # ** This line is making the folder config really confusing
 	if not os.path.exists(directory):
 		os.makedirs(directory)
+	composite_path = letter_color + "_" + letter + "_" + shape_color + "_" + shape + "_" + orientation + ".png"
 	composite.save(directory+'/'+composite_path)
 
 	image = composite.convert("RGBA")
