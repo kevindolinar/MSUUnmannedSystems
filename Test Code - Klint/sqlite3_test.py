@@ -97,8 +97,10 @@ def del_and_update():
     # that gets interpretted later on
     c.execute('SELECT * FROM stuffToPlot')
 
-    # Example of a one row for loop
-    [print(row) for row in c.fetchall()]
+    # Example of a one row for loop. Needs Python3.
+    #[print(row) for row in c.fetchall()]
+    for row in c.fetchall():
+        print(row)
 
     c.execute('UPDATE stuffToPlot SET value = 99 WHERE value=8')
     conn.commit()
